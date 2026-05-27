@@ -194,3 +194,39 @@ _context.XxxItems.Add(new XxxItem { ... });
 // 3. sprawdź czy już zrealizowane (409)
 // 4. wprowadź zmiany
 // 5. SaveChangesAsync + CommitAsync
+
+
+##DLa Like
+Это означает что GET эндпоинт принимает опциональный query параметр ?name=.
+
+Что меняется в коде
+Controller — параметр становится nullable:
+csharp[HttpGet]
+public async Task<IActionResult> GetAll([FromQuery] string? name)
+{
+    var result = await _dbService.GetAllMakers(name);
+    return Ok(result);
+}
+IDbService:
+csharpTask<List<MakerDto>> GetAllMakers(string? name);
+DbService — добавляешь фильтrowanie przez LIKE:
+csharppublic async Task<List<MakerDto>> GetAllMakers(string? name)
+{
+    var query = _context.Makers.AsQueryable();
+
+    // jeśli parametr podany → filtruj przez LIKE
+    if (name != null)
+        query = query.Where(m => m.Name.Contains(name));
+
+    return await query.Select(m => new MakerDto
+    {
+        // pola...
+    }).ToListAsync();
+}
+
+Kluczowe rzeczy
+
+[FromQuery] — oznacza że parametr pochodzi z ?name=
+string? — nullable bo parametr opcjonalny
+.Contains(name) — to jest właśnie LIKE w EF Core, generuje WHERE Name LIKE '%name%'
+AsQueryable() — pozwala budować zapytanie warunkowo
