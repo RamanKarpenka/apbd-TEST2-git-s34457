@@ -53,6 +53,10 @@ dotnet add package Microsoft.EntityFrameworkCore.Tools
 ```bash
 dotnet ef dbcontext scaffold "Data Source=db-mssql;Initial Catalog=2019SBD;Integrated Security=True;Trust Server Certificate=True" Microsoft.EntityFrameworkCore.SqlServer --output-dir Models --context-dir Data --context DatabaseContext --force --table s34457.Tabela1 --table s34457.Tabela2
 ```
+Przykladowa
+```bash
+dotnet ef dbcontext scaffold "Data Source=db-mssql;Initial Catalog=2019SBD;Integrated Security=True;Trust Server Certificate=True" Microsoft.EntityFrameworkCore.SqlServer --output-dir Models --context-dir Data --context DatabaseContext --force --table s34457.Client --table s34457.Status --table s34457.Order --table s34457.Product --table s34457.Product_Order
+```
 
 Po scaffold w `Models/` pojawią się wszystkie klasy, w `Data/` pojawi się `DatabaseContext.cs`.
 
