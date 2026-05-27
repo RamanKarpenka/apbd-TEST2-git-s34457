@@ -22,13 +22,6 @@ Utwórz foldery:
 Controllers/ DTOs/ Data/ Exceptions/ Models/ Services/
 ```
 
-Utwórz `.gitignore`:
-```
-bin/
-obj/
-.idea/
-```
-
 ---
 
 ## Krok 2 — NuGet
