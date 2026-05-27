@@ -164,3 +164,33 @@ Uruchom projekt → otwórz `http://localhost:XXXX/swagger`
 - ⚠️ `dotnet-ef` musi być zainstalowany globalnie — sprawdź przed kolokwium
 - ⚠️ VPN musi być włączony przed scaffold i przed uruchomieniem projektu
 - ⚠️ `.gitignore` z `bin/` i `obj/` — obowiązkowe, bez tego -50%
+
+
+## ===== PUT CHEATSHEET =====
+
+// "nie istnieje" → 404
+var x = await _context.Xxx.FirstOrDefaultAsync(...);
+if (x is null) throw new NotFoundException("...");
+
+// "już zrealizowane / już istnieje" → 409
+if (order.FulfilledAt != null) throw new ConflictException("...");
+
+// "zmień pole"
+order.StatusId = status.Id;
+
+// "ustaw datę"
+order.FulfilledAt = DateTime.Now;
+
+// "usuń powiązane rekordy"
+var items = _context.XxxItems.Where(x => x.OrderId == id);
+_context.XxxItems.RemoveRange(items);
+
+// "dodaj nowy rekord"
+_context.XxxItems.Add(new XxxItem { ... });
+
+// ===== KOLEJNOŚĆ ZAWSZE =====
+// 1. sprawdź czy główny obiekt istnieje (404)
+// 2. sprawdź czy status/inne istnieje (404)
+// 3. sprawdź czy już zrealizowane (409)
+// 4. wprowadź zmiany
+// 5. SaveChangesAsync + CommitAsync
