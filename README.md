@@ -196,7 +196,7 @@ _context.XxxItems.Add(new XxxItem { ... });
 // 5. SaveChangesAsync + CommitAsync
 
 
-##DLa Like
+## DLa Like
 Это означает что GET эндпоинт принимает опциональный query параметр ?name=.
 
 Что меняется в коде
